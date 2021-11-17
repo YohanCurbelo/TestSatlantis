@@ -1,0 +1,25 @@
+variables:
+  DEBFULLNAME: "Andres Demski"
+  DEBEMAIL: "<ademski@satellogic.com>"
+  IMAGE_NAME: registry.gitlab.com/hdlteam/candidate-test:latest
+
+stages:
+  - tests
+
+ej1:
+  stage: tests
+  image: $IMAGE_NAME
+  script:
+    - bash .gci/run_test.sh ./ej1/test/
+
+ej2:
+  stage: tests
+  image: $IMAGE_NAME
+  script:
+    - bash .gci/run_test.sh ./ej2/test/
+
+ej3:
+  stage: tests
+  image: $IMAGE_NAME
+  script:
+    - bash .gci/not_empty.sh ./ej3
