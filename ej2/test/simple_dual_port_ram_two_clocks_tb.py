@@ -37,19 +37,17 @@ def simple_test(dut):
     yield RisingEdge(dut.CLKA)
 
     dut._log.info('Writing all addresses with random integer data')
-    dut.ADDRA 	<=  0x00000
     data_tx      =  [0 for i in range(0,2**len(dut.ADDRA)-1)]
     for i in range(2**len(dut.ADDRA)-1):
         dut.WEA 	<= 1
         dut.ADDRA 	<= i
-        data_tx[i] 	 = random.randint(0, 1024)
+        data_tx[i] 	 = random.randint(0, 2**len(dut.DIA)-1)
         dut.DIA 	<= data_tx[i]
         yield RisingEdge(dut.CLKA)
         dut._log.info("{} was written at address: {}" .format(dut.DIA.value, dut.ADDRA.value))
         dut.WEA 	<= 0
   
     dut._log.info('Reading all memory addresses')
-    dut.ADDRB 	<= 0x00000
     for i in range(2**len(dut.ADDRB)-1):		
         dut.ADDRB   <=  i
         yield ReadOnly()        
